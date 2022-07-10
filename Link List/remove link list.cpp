@@ -52,3 +52,21 @@ public:
         
     }
 };
+
+/*****************************************************************************************************************************************************************/
+ListNode*removeElements(ListNode*head,val)
+{
+ if (!head
+{
+        return NULL;
+    }
+    ListNode* post = removeElements(head->next, val);
+    if (head->val != val)
+     {
+        head->next = post;
+        return head;
+    }
+    
+    delete head;
+    return post;
+}
