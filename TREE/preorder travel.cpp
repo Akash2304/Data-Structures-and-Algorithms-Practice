@@ -57,3 +57,76 @@ public:
         
     }
 };
+
+\*****************************************************************************************************************************************************************/
+ 
+ ITERATIVE......
+ 
+ vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> res;
+    TreeNode *node = root;
+    stack<TreeNode*> st;
+    while (node || st.size()) {
+        if (node) {
+            res.push_back(node->val);
+            st.push(node);
+            node = node->left;
+        } else {
+            node = st.top()->right;
+            st.pop();
+        }
+    }
+    return res;
+}
+
+/***************************************************************************************************************************************************************/
+
+ITERATIVE TRAVERSAL......
+ 
+ vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root) return res;
+     
+    stack<TreeNode*> st;
+    st.push(root);
+    while (st.size()) {
+        TreeNode* node = st.top();st.pop();
+        res.push_back(node->val);
+        if (node->right) st.push(node->right);
+        if (node->left) st.push(node->left);
+    }
+    return res;
+}
+
+/*****************************************************************************************************************************************************************/
+
+MORRISH TRAVERSAL.......
+ 
+ void preorder(TreeNode* node, vector<int>& res) {
+    while (node) {
+        if (!node->left) {
+            // output 1
+            res.push_back(node->val);
+            node = node->right;
+        } else {
+            TreeNode* tmp = node->left;
+            while (tmp->right && tmp->right != node) tmp = tmp->right;
+            if (tmp->right == nullptr) {
+                tmp->right = node;
+                // output 2
+                res.push_back(node->val);
+                node = node->left;                    
+            } else {
+                // clear 1
+                tmp->right = nullptr;
+                node = node->right;
+            }                
+        }
+    }
+}
+vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> res;
+    preorder(root, res);
+    return res;
+}
+ 
