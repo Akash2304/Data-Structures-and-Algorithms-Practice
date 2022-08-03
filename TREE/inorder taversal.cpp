@@ -54,3 +54,53 @@ public:
         
     }
 };
+
+\*****************************************************************************************************************************************************************/
+ 
+ MORRISH TRAVERSAL..........
+ 
+ void inorder(TreeNode* node, vector<int>& res) {
+    while (node) {
+        if (!node->left) {
+            res.push_back(node->val);
+            node = node->right;
+        } else {
+            TreeNode* tmp = node->left;
+            while (tmp->right && tmp->right != node) tmp = tmp->right;
+            if (tmp->right == nullptr) {
+                tmp->right = node;
+                node = node->left;                    
+            } else {
+                tmp->right = nullptr;
+                res.push_back(node->val);
+                node = node->right;
+            }                
+        }
+    }
+}
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    inorder(root, res);
+    return res;
+}
+
+\***************************************************************************************************************************************************************/
+ 
+ ITERATIVE........
+ 
+ vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    stack<TreeNode*> st;
+    TreeNode* node = root;
+    while (node || st.size()) {
+        if (node) {
+            st.push(node);
+            node = node->left;
+        } else {
+            res.push_back(st.top()->val); // output
+            node = st.top()->right;
+            st.pop();
+        }
+    }
+    return res;
+}
