@@ -64,3 +64,24 @@ vector<int> leftView(Node *root)
    return v;
   
 }
+
+/*****************************************************************************************************************************************************************/
+
+void cal(Node* root,vector<int> & vc,int level){
+   if(root == NULL){
+       return;
+   }
+   if(vc.size() == level){
+       vc.push_back(root->data);
+   }
+   cal(root->left,vc,level+1);
+   cal(root->right,vc,level+1);
+}
+vector<int> leftView(Node *root)
+{
+  // Your code here
+  vector<int> vc;
+  int level=0;
+  cal(root,vc,level);
+  return vc;
+}
