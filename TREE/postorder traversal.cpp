@@ -107,3 +107,31 @@ vector<int> postorderTraversal(TreeNode* root) {
     return res;
 }
 
+/**************************************************************************************************************************************************************/
+
+MORRISH TRAVERSAL......
+ 
+ void postorder(TreeNode* node, vector<int>& res) {
+    while (node) {
+        if (node->right) {
+            TreeNode* tmp = node->right;
+            while(tmp->left && tmp->left != node) tmp = tmp->left;
+            if (!tmp->left) {
+                res.push_back(node->val);
+                tmp->left = node;
+                node = node->right;
+            } else {
+                tmp->left = nullptr;
+                node = node->left;
+            }
+        } else {
+            res.push_back(node->val);
+            node = node->left;
+        }
+    }
+}
+vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> res;
+    postorder(root, res);
+    return vector<int>(res.rbegin(), res.rend());
+}
