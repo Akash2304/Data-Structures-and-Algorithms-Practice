@@ -50,7 +50,7 @@ vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
 
 /******************************************************************************************************************************************************************/
 
-3. Priority Queue 
+2. Priority Queue 
 
 vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
         
