@@ -81,3 +81,32 @@ public:
     return res;
     }
 };
+
+/******************************************************************************************************************************************************************/
+class Solution {
+public:
+    void find(int i,vector<int> &cand,vector<vector<int>> &v,vector<int> &ans,int target)
+    {
+        if(i==cand.size())
+        {
+        if(target==0)
+        {
+            v.push_back(ans);
+        }
+            return;
+        }
+        if(cand[i]<=target)
+        {
+            ans.push_back(cand[i]);
+            find(i,cand,v,ans,target-cand[i]);
+            ans.pop_back();
+        }
+        find(i+1,cand,v,ans,target);
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> v;
+        vector<int> ans;
+        find(0,candidates,v,ans,target);
+        return v;
+    }
+};
