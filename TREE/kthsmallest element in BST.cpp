@@ -24,7 +24,9 @@ The number of nodes in the tree is n.
 
 Follow up: If the BST is modified often (i.e., we can do insert and delete operations) and you need to find the kth smallest frequently, how would you optimize?
 *******************************************************************************************************************************************************************/
-  class Solution {
+**iterative method*** 
+
+class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
         
@@ -47,3 +49,7 @@ public:
     return kthSmallest(root->right, k);
     }
 };
+
+/*****************************************************************************************************************************************************************/
+
+***recursive method***
