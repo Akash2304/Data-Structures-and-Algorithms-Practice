@@ -25,6 +25,8 @@ Constraints:
  
 
 Follow up: Could you solve it without loops/recursion?
+
+SAME FOR POWER OF TWO 
 *********************************************************************************************************************************************************************/
 
 class Solution {
