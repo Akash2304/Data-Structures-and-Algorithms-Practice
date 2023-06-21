@@ -79,3 +79,96 @@ public:
         
     }
 };
+
+/************************************************************************************************************************************************************************/
+class Solution {
+public:
+    string decodeString(string s) {
+         stack<string> chars;
+        stack<int> nums;
+        string res;
+        int num = 0;
+        for(char c : s) {
+            if(isdigit(c)) {
+                num = num*10 + (c-'0');                              
+            }
+            else if(isalpha(c)) {
+                res.push_back(c);                
+            }
+            else if(c == '[') {
+                chars.push(res);
+                nums.push(num);
+                res = "";
+                num = 0;
+            }
+            else if(c == ']') {
+                string tmp = res;
+                for(int i = 0; i < nums.top()-1; ++i) {
+                    res += tmp;
+                }
+                res = chars.top() + res;
+                chars.pop(); nums.pop();
+            }
+        }
+        return res;
+    }
+};
+
+/*************************************************************************************************************************************************************************/
+Intuition:-
+After reading the question let's track some general terms like what type of observation will lead us to problem solving.
+ In the question they told us about the repeatation and to show that there will be numbers outside the square brackets [...].
+So we need to use this information of square brackets . Let's see how :
+
+Before opening parenthesis we will get the number that we will be using for repeatations of our string .
+when we get our closing parenthesis we will go back to our string letters to repeat them the number of
+times the number and replace the originial part of that string and place i after that to continue .
+Algorithm:-
+
+Let's first initialize some variables and functions string repeat()->our helper function to repeat our substring that many number of times , 
+ s->our final decoded string , repeatLetters->This are the letters that should be repeated , repeatTimes->Number of times the letters should be repeated .
+Let's create a helper function which repeates the substring that many number of times the logic is quiet simple
+After the first [ parenthesis we need to extract those letters to repeate that many times
+After getting the decode part we will just replace the original encoded string with our repeated decoded string by the s.replace() built in method in c++
+Code:-
+
+//Comment and Upvote
+
+class Solution {
+public:
+    //Function to help repeat the substring a number of times
+    string repeat(string str,int times){
+        string result="";
+        for(int i=0;i<times;i++) result += str;
+        return result;
+    }
+    string decodeString(string s) {
+        int i=0;
+        while(i<s.size()){
+            if(s[i]!=']'){
+                i++;
+                continue;
+            }
+            //The string that needs to get repeated after the first parenthesis '['
+            int j=i;
+            while(s[j]!='[') j--;
+            //The letters that we will be repeating
+            string repeatLetters = s.substr(j+1,i-j-1);
+            int k=j;
+            j--;
+            //checking the number before opening the parenthesis so we can get a count that how many times we need to repeat the strin
+            while((j>0) && (isdigit(s[j])))
+                j--;
+            
+            //Corner case : When we r at the start of our string
+            if(j!=0) j++;
+            //Find the number of times the letter should be repeated
+            int repeatTimes = stoi(s.substr(j,k-j));
+            //replace the encoded part of string with decoded part
+            s.replace(j,i-j+1,repeat(repeatLetters,repeatTimes));
+            //Putting i in the right place of our string
+            i=j+repeatLetters.size()*repeatTimes;
+        }
+        return s;
+    }
+};
